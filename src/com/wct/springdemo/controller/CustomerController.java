@@ -20,16 +20,14 @@ public class CustomerController {
 	//need to inject the DAO into the controller
 	
 	@Autowired
-	private CustomerDAO customerDAO;
+	private CustomerService thecustomerService;
 	
-	@Autowired
-	private CustomerService customerservice;
-	
+		
 	@GetMapping("/list")
 	public String listCustomers(Model theModel){
 		
-		//get the customer form DAO
-		List<Customer> theCustomer=customerDAO.getCustomers();
+		//get the customer form service
+		List<Customer> theCustomer=thecustomerService.getCustomers();
 		
 		//Add those customer to the model
 		theModel.addAttribute("customerlist",theCustomer);
