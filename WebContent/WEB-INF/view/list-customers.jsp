@@ -34,15 +34,32 @@
 					<th>First Name</th>
 					<th>Last Name</th>
 					<th>Email</th>
+					<th>Action</th>
 				</tr>
 
 				<!-- Loop over and print our customer details -->
 				<c:forEach var="tempCustomer" items="${customerlist}">
-
+					<!-- Construct an update link with customer id -->
+					<c:url var="updateLink" value="/customer/showFormForUpdate">
+						<c:param name="customerId" value="${tempCustomer.id }" />
+					</c:url>
+					
+					<c:url var="deleteLink" value="/customer/delete">
+						<c:param name="customerId" value="${tempCustomer.id }" />
+					</c:url>
+					
 					<tr>
 						<td>${tempCustomer.firstName}</td>
 						<td>${tempCustomer.lastName}</td>
 						<td>${tempCustomer.email}</td>
+						
+						<td>
+							<!-- Display the update link -->
+							<a href="${updateLink}">Update</a>
+							|
+							<a href="${deleteLink}"
+							 onClick="if(!(confirm('Are you sure you want to delete the Customer?'))) return false">Delete</a>
+						</td>
 					</tr>
 
 				</c:forEach>

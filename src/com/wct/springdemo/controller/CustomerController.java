@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.wct.springdemo.dao.CustomerDAO;
 import com.wct.springdemo.entity.Customer;
@@ -60,6 +61,37 @@ public class CustomerController {
 		thecustomerService.saveCustomer(theCustomer);
 		
 		return "redirect:/customer/list";
+	}
+	
+	@GetMapping("/showFormForUpdate")
+	public String showFromForUpdate(@RequestParam("customerId") int theId, Model theModel){
+		
+		//Get the customer form database
+		
+		Customer theCustomer=thecustomerService.getCustomers(theId);
+		
+		//Set customer as a model attributes to pre-poplate the form
+		
+		theModel.addAttribute("customer",theCustomer);
+		
+		//send over to our form
+				
+		return "customer-form";
+	}
+	
+	@GetMapping("/delete")
+	public String delete(@RequestParam("customerId") int theId, Model theModel){
+		
+		//Get the customer form database
+		
+		thecustomerService.deleteCustomers(theId);
+		
+
+		
+		//send over to our form
+				
+		return "redirect:/customer/list";
+		
 	}
 
 }
